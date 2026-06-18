@@ -14,7 +14,7 @@
 #
 #===========================================================================
 
-BIN     = memfit
+BIN      = main.exe
 
 CC       = gcc
 CFLAGS   = -D_GNU_SOURCE -Wall -g
@@ -22,32 +22,36 @@ CPP      = g++
 CPPFLAGS = -D_GNU_SOURCE -Wall -g
 LNFLAGS  = -Wall
 
-CFILES := $(wildcard *.c)
-OBJS1 := $(CFILES:.c=.o)
+# Шукаємо всі файли у папці
+CFILES   := $(wildcard *.c)
+OBJS1    := $(CFILES:.c=.o)
 
 CPPFILES := $(wildcard *.C)
-OBJS2 := $(CPPFILES:.C=.o)
+OBJS2    := $(CPPFILES:.C=.o)
 
 HEADERFILES := $(wildcard *.H)
 
+# Правило для .c файлів
 %.o: %.c $(HEADERFILES)
 	@echo "Compiling $<..."
-	@$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $<
 
+# Правило для .C (C++) файлів
 %.o: %.C $(HEADERFILES)
 	@echo "Compiling $<..."
-	@$(CPP) $(CPPFLAGS) -c $<
+	$(CPP) $(CPPFLAGS) -c $<
 
 all: $(BIN)
 
+# Лінкування
 $(BIN): $(OBJS2) $(OBJS1)
 	@echo "Linking $@..."
-	@$(CPP) $(LNFLAGS) -o $@ $(OBJS2) $(OBJS1)
+	$(CPP) $(LNFLAGS) -o $@ $(OBJS2) $(OBJS1)
 
+# Очищення проєкту
 clean:
 	@echo "Cleaning files..."
-	#@-rm *.o *~ $(BIN) $(BIN2) $(BIN3)
-	@-rm *.o *~ $(BIN)
+	rm -f *.o *~ $(BIN)
 
 #
 # Bedeutung Makefile Makros:

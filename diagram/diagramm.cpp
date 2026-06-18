@@ -53,7 +53,7 @@ int main() {
     }
 
     fprintf(gp, "set title 'Speicheroperationen bis zur Kompaktierung'\n");
-    fprintf(gp, "set xlabel 'Maximale Allokationsgroesse'\n");
+    fprintf(gp, "set xlabel 'Maximale Allokationsblockgroesse (ALLOC\\_MAX)'\n");
     fprintf(gp, "set ylabel 'Anzahl der Speicheroperationen'\n");
 
     fprintf(gp, "set logscale x\n");

@@ -12,17 +12,16 @@
 
 #include "memfitHelpers.H"
 
-#define MEM_SIZE         1000
-#define MEM_MIN_ADDRESS  100
-#define ALLOC_MAX        10
-
+// #define MEM_SIZE         1000
+// #define MEM_MIN_ADDRESS  100
+// #define ALLOC_MAX        10
 
 
 unsigned
 firstFitAlloc( unsigned blockSize )
   {
   unsigned address = 0;
-  int index = 0;
+  int index = -1;
 
   for (int i = 0; i < freeList.size(); i++)
   {
@@ -32,32 +31,40 @@ firstFitAlloc( unsigned blockSize )
     }
   }
 
+  if ( index == -1) return 0;
   address = allocBlock( index, blockSize );
   if (address==0 || blockSize<=0) return 0;
-  
+
   return address;
 };
 
-unsigned 
-nextFitAlloc(unsigned blockSize)
+unsigned nextFitAlloc(unsigned blockSize)
 {
     static unsigned lastIndex = 0;
+    int index = -1;
 
     for (unsigned k = 0; k < freeList.size(); ++k)
     {
-        unsigned i = (lastIndex + k) % freeList.size();
+        unsigned i = (lastIndex + k) % freeList.size(); //Rest der Teilung
 
         if (freeList[i].size >= blockSize)
         {
-            unsigned address = allocBlock(i, blockSize);
-
-            lastIndex = i;
-
-            return address;
+            index = i;
+            break;
         }
     }
 
-    return 0;
+    if (index == -1)
+        return 0;
+
+    lastIndex = index; //!
+
+    unsigned address = allocBlock(index, blockSize);
+
+    if (address == 0 || blockSize <= 0)
+        return 0;
+
+    return address;
 }
 
 
