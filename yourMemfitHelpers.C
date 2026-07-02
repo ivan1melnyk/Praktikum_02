@@ -61,8 +61,8 @@ unsigned nextFitAlloc(unsigned blockSize)
 
     unsigned address = allocBlock(index, blockSize);
 
-    if (address == 0 || blockSize <= 0)
-        return 0;
+    // if (address == 0 || blockSize <= 0)
+    //     return 0;
 
     return address;
 }
@@ -76,7 +76,7 @@ bestFitAlloc( unsigned blockSize )
   
   for (int i = 0 ; i < freeList.size(); i++)
   {
-      if (freeList[i].size >= blockSize)
+      if (freeList[i].size >= blockSize)   //können wir diesen Block in Betracht ziehen? Ist der Block groß genug?
       {
           if (best_index == -1 ||
               freeList[i].size < freeList[best_index].size)
@@ -87,7 +87,7 @@ bestFitAlloc( unsigned blockSize )
   }
   
   address = allocBlock(best_index, blockSize);
-  if (address==0 || blockSize<=0) return 0;
+  //if (address==0 || blockSize<=0) return 0;
 
   return address;
 };
@@ -112,7 +112,7 @@ worstFitAlloc( unsigned blockSize )
   }
   
   address = allocBlock(worst_index, blockSize);
-  if (address==0 || blockSize<=0) return 0;
+  //if (address==0 || blockSize<=0) return 0;
 
   return address;
 };

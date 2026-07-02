@@ -19,7 +19,7 @@
 
 #define MEM_SIZE         1000
 #define MEM_MIN_ADDRESS  100
-#define ALLOC_MAX        700
+#define ALLOC_MAX        10
 
 // ---------------------------------------------------------------------------
 
